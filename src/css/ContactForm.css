@@ -1,0 +1,41 @@
+
+.add-contact-form {   
+    padding: 20px 20px 150px;
+    background: url("../images/old_rolodex_card.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+Form {
+    margin: 30px;
+}
+
+h1 {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.back-link {
+    margin: 20px;
+    color: #003F88;
+}
+
+.back-link:hover {
+    color: #BA0202;
+}
+
+.submit-contact {
+    background-color: transparent;
+    font-weight: bold;
+    color: #BA0202;
+    font-size: 20px;
+    border: #BA0202 2px solid;
+}
+
+.submit-contact:hover {
+    color: #003F88;
+    border-color: #003F88;
+    background: transparent;
+}

@@ -1,0 +1,23 @@
+#contact-list {
+    margin: 0 auto 150px;
+}
+
+.contact-name {
+    margin: auto;
+}
+
+.contact-link,
+.edit-link,
+.delete-link,
+.spacer {
+    display: inline-block;
+    margin: .5em 1em;
+    color: #000;
+    font-size: 25px;
+}
+
+.contact-link {
+    font-weight: bold;
+}
+
+
