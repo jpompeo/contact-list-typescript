@@ -1,59 +1,48 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { Form, Col, Button } from 'react-bootstrap'
 import '../css/EditForm.css'
 
-class EditForm extends Component {
+const EditForm = (props) => {
 
-    constructor(props) {
-        super()
-
-        //to hold data from form input
-        this.state = {
-            name: props.contact.name,
-            email: props.contact.email,
-            phone: props.contact.phone,
-            image: props.contact.image
-        }
-
-        //bind function to contact form
-        this.saveContact = this.saveContact.bind(this);
-    }
+    //state to hold data from form input
+    const [name, setName] = useState(props.contact.name);
+    const [email, setEmail] = useState(props.contact.email);
+    const [phone, setPhone] = useState(props.contact.phone);
+    const [image, setImage] = useState(props.contact.image);
 
     //save edits as new contact and replace previous "version" of contact in contacts array on App state
-    saveContact() {
-
+    const saveContact = () => {
         //create new random id for edited contact
         const generateId = () => Math.round(Math.random() * 100000000)
 
         //new contact info to submit
         const editedContact = {
             id: generateId(),
-            name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phone,
-            image: this.state.image
+            name,
+            email,
+            phone,
+            image
         }
 
         //check if all fields have been filled out & id has been generated
-        if (editedContact.name && editedContact.email && editedContact.phone && editedContact.image && editedContact.id) {
+        if (name && email && phone && image && editedContact.id) {
 
             //remove previous version of contact from app state
-            this.props.deleteContact(this.props.contact.id)
+            props.deleteContact(this.props.contact.id)
 
             //add input value to contacts in App
-            this.props.addNew(editedContact);
+            props.addNew(editedContact);
 
             //return to home screen
-            this.props.history.push('/')
+            props.history.push('/')
 
         } else {
             alert("Please fill out all required fields");
         }
     }
 
-    render() {
         return (
             <div className="edit-contact-form">
                 <header>
@@ -61,7 +50,6 @@ class EditForm extends Component {
                 </header>
 
                 <Form>
-
                     {/* Name Input */}
                     <Form.Group as={Form.Row} controlId="input-name">
                         <Form.Label column sm={3}>Contact Name: </Form.Label>
@@ -69,11 +57,11 @@ class EditForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.name}
+                                value={name}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ name: event.target.value })
+                                    setName(event.target.value)
                                 }}
                                 placeholder="John Doe"
                                 type="text"
@@ -88,11 +76,11 @@ class EditForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.email}
+                                value={email}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ email: event.target.value })
+                                    setEmail(event.target.value)
                                 }}
                                 placeholder="jdoe@gmail.com"
                                 type="email"
@@ -107,18 +95,17 @@ class EditForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.phone}
+                                value={phone}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ phone: event.target.value })
+                                    setPhone(event.target.value)
                                 }}
                                 placeholder="(234) 555-6789"
                                 type="tel"
                                 required />
                         </Col>
                     </Form.Group>
-
 
                     {/* Image Url Input */}
                     <Form.Group as={Form.Row} controlId="input-name">
@@ -127,11 +114,11 @@ class EditForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.image}
+                                value={image}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ image: event.target.value })
+                                    setImage(event.target.value)
                                 }}
                                 placeholder="https://www.website.com/contact_image.jpg"
                                 type="url"
@@ -143,19 +130,16 @@ class EditForm extends Component {
                     <Form.Group as={Form.Row}>
                         <Col sm={{ span: 3, offset: 9 }}>
 
-                            <Button className="submit-contact" type="button" onClick={this.saveContact}>Save Changes</Button>
+                            <Button className="submit-contact" type="button" onClick={saveContact}>Save Changes</Button>
 
                         </Col>
                     </Form.Group>
-
                 </Form>
 
                 {/* Back Link */}
                 <Link className="back-link" to="/contacts">Back</Link>
-
             </div>
         )
-    }
 }
 
 //set prop types
@@ -167,9 +151,7 @@ EditForm.propTypes = {
         phone: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired
     })),
-
     addNew: PropTypes.func.isRequired,
-
     deleteContact: PropTypes.func.isRequired
 }
 

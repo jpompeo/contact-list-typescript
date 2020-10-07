@@ -1,28 +1,19 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { Form, Col, Button } from 'react-bootstrap'
 import '../css/ContactForm.css'
 
-class ContactForm extends Component {
+const ContactForm = (props) => {
 
-    constructor(props) {
-        super(props)
-
-        //to hold data from form input
-        this.state = {
-            name: '',
-            email: '',
-            phone: '',
-            image: ''
-        }
-
-        //bind function to contact form
-        this.createContact = this.createContact.bind(this);
-    }
+    //state - to hold data from form input
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [image, setImage] = useState('');
 
     //create new contact and add to contacts array on App state
-    createContact() {
+    const createContact = () => {
 
         //create random id for new contact
         const generateId = () => Math.round(Math.random() * 100000000)
@@ -30,36 +21,33 @@ class ContactForm extends Component {
         //new contact to submit
         const newContact = {
             id: generateId(),
-            name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phone,
-            image: this.state.image
+            name,
+            email,
+            phone,
+            image
         }
 
         //check if all fields have been filled out & id has been generated
-        if (newContact.name && newContact.email && newContact.phone && newContact.image && newContact.id) {
+        if (name && email && phone && image && newContact.id) {
 
             //add input value to contacts in App
-            this.props.addNew(newContact);
+            props.addNew(newContact);
 
             //return to home screen
-            this.props.history.push('/')
+            props.history.push('/')
 
         } else {
             alert("Please fill out all required fields");
         }
     }
 
-    render() {
         return (
             <div className="add-contact-form">
                 <header>
                     <h1>Add Contact</h1>
                 </header>
 
-
                 <Form>
-
                     {/* Name Input */}
                     <Form.Group as={Form.Row} controlId="input-name">
                         <Form.Label column sm={3}>Contact Name: </Form.Label>
@@ -67,11 +55,10 @@ class ContactForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.name}
-
+                                value={name}
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ name: event.target.value })
+                                    setName(event.target.value)
                                 }}
                                 placeholder="John Doe"
                                 type="text"
@@ -86,11 +73,11 @@ class ContactForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.email}
+                                value={email}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ email: event.target.value })
+                                    setEmail(event.target.value)
                                 }}
                                 placeholder="jdoe@gmail.com"
                                 type="email"
@@ -105,11 +92,11 @@ class ContactForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.phone}
+                                value={phone}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ phone: event.target.value })
+                                    setPhone(event.target.value)
                                 }}
                                 placeholder="(234) 555-6789"
                                 type="tel"
@@ -125,11 +112,11 @@ class ContactForm extends Component {
 
                             <Form.Control
                                 // setting value to that of current state
-                                value={this.state.image}
+                                value={image}
 
                                 // updating state on input change
                                 onChange={event => {
-                                    this.setState({ image: event.target.value })
+                                    setImage(event.target.value)
                                 }}
                                 placeholder="https://pbs.twimg.com/media/EYKjWpyWAAEEBIh.jpg"
                                 type="url"
@@ -141,7 +128,7 @@ class ContactForm extends Component {
                     <Form.Group as={Form.Row}>
                         <Col sm={{ span: 3, offset: 9 }}>
 
-                            <Button className="submit-contact" type="button" onClick={this.createContact}>Add New Contact</Button>
+                            <Button className="submit-contact" type="button" onClick={createContact}>Add New Contact</Button>
 
                         </Col>
                     </Form.Group>
@@ -153,7 +140,6 @@ class ContactForm extends Component {
 
             </div>
         )
-    }
 }
 
 //set prop types
