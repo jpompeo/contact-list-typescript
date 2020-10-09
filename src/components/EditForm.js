@@ -30,7 +30,7 @@ const EditForm = (props) => {
         if (name && email && phone && image && editedContact.id) {
 
             //remove previous version of contact from app state
-            props.deleteContact(this.props.contact.id)
+            props.deleteContact(props.contact.id)
 
             //add input value to contacts in App
             props.addNew(editedContact);

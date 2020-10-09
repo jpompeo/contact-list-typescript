@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Home from './Home';
 import ContactForm from './ContactForm';
 import ContactDetail from './ContactDetail';
@@ -8,40 +8,29 @@ import _ from 'lodash';
 import { defaultContactInfo } from "../data/contact-info";
 import '../css/App.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
+const App = () => {
 
       //to hold all data for contact list and details
-      contacts: [...defaultContactInfo], // default contacts to display
+      const [contacts, setContacts] = useState([...defaultContactInfo]); // default contacts to display
 
       //to store information on selected contact for editing
-      contactToEdit: {
+      const [contactToEdit, setContactToEdit] =  useState({
         id: '',
         name: '',
         email: '',
         phone: '',
         image: ''
-      }
-    }
+      });
 
-    //bind functions to App component
-    this.addContact = this.addContact.bind(this);
-    this.removeContact = this.removeContact.bind(this);
-    this.editContact = this.editContact.bind(this);
-  }
-
-  // add new contact to app state with input from contact form 
-  addContact = (newContact) => {
-    this.setState({ contacts: this.state.contacts.concat([newContact]) });
+   // add new contact to app state with input from contact form
+  const addContact = (newContact) => {
+    setContacts(oldContacts => { return [...oldContacts, newContact] });
   }
 
   //remove targeted contact from app state 
-  removeContact = (contactId) => {
+  const removeContact = (contactId) => {
     //get current state of contacts from app
-    const currentContacts = this.state.contacts;
+    const currentContacts = [...contacts];
 
     //find index of contact to remove
     const index = _.findIndex(currentContacts, (contact) => { return contact.id === contactId; });
@@ -52,7 +41,7 @@ class App extends Component {
       currentContacts.splice(index, 1);
 
       //set state of contacts to new array
-      this.setState({ contacts: currentContacts });
+      setContacts(currentContacts);
 
     } else {
       console.log('Could not find contact to remove')
@@ -60,15 +49,14 @@ class App extends Component {
   }
 
   // change state of contactToEdit on App (for edit form to use)
-  editContact = (contactId) => {
+  const editContact = (contactId) => {
     //find selected contact in array of contacts in app state
-    const clickedContact = _.find(this.state.contacts, (contact) => { return contact.id === contactId; })
+    const clickedContact = _.find(contacts, (contact) => { return contact.id === contactId; })
 
     //set as contact to edit on app state
-    this.setState({ contactToEdit: clickedContact });
+    setContactToEdit(clickedContact);
   }
 
-  render() {
     return (
       <div id="app">
         {/* to direct which component to display based on url path */}
@@ -76,28 +64,27 @@ class App extends Component {
 
           {/* navigate to home from either path // pass contacts to render in list on home page and functions to edit/remove */}
           <Route exact path={['/', '/contacts']} render={() => (
-            <Home contacts={this.state.contacts} deleteContact={this.removeContact} editInfo={this.editContact} />
+            <Home contacts={contacts} deleteContact={removeContact} editInfo={editContact} />
           )} />
 
           {/* pass function to add new contacts to app state through contact form */}
           <Route path='/contacts/new' render={(routerProps) => (
-            <ContactForm addNew={this.addContact} history={routerProps.history} />
+            <ContactForm addNew={addContact} history={routerProps.history} />
           )} />
 
           {/* pass function to edit contacts in app state through edit form */}
           <Route path='/contacts/edit' render={(routerProps) => (
-            <EditForm deleteContact={this.removeContact} addNew={this.addContact} contact={this.state.contactToEdit} history={routerProps.history} />
+            <EditForm deleteContact={removeContact} addNew={addContact} contact={contactToEdit} history={routerProps.history} />
           )} />
 
           {/* navigate to contact details by matching number in url path to contact id */}
           <Route path='/contacts/:id' render={(routerProps) => (
-            <ContactDetail contactId={parseInt(routerProps.match.params.id, 10)} contacts={this.state.contacts} />
+            <ContactDetail contactId={parseInt(routerProps.match.params.id, 10)} contacts={contacts} />
           )} />
 
         </Switch>
       </div>
     )
-  }
 }
 
 export default App
