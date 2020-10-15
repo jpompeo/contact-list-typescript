@@ -3,8 +3,18 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { Form, Col, Button } from 'react-bootstrap'
 import '../styles/ContactForm.css'
+import { AddContact } from "../types/generalTypes";
 
-const ContactForm = (props) => {
+interface ContactFormProps {
+	history: any;
+	addNew: AddContact;
+}
+
+const ContactForm: React.FC<ContactFormProps> = (
+	{
+		history,
+		addNew
+	}): JSX.Element => {
 
 	//state - to hold data from form input
 	const [name, setName] = useState('');
@@ -31,10 +41,10 @@ const ContactForm = (props) => {
 		if (name && email && phone && image && newContact.id) {
 
 			//add input value to contacts in App
-			props.addNew(newContact);
+			addNew(newContact);
 
 			//return to home screen
-			props.history.push('/')
+			history.push('/')
 
 		} else {
 			alert("Please fill out all required fields");
