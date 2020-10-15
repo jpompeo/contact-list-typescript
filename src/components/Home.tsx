@@ -40,8 +40,11 @@ const Home: React.FC<HomeProps> = (
 			{/* Full list of contacts */}
 			<Row>
 				<Col>
-					<ContactList contacts={contacts} deleteContact={deleteContact}
-								 editInfo={editInfo}/>
+					<ContactList
+						contacts={contacts}
+						deleteContact={deleteContact}
+						editInfo={editInfo}
+					/>
 				</Col>
 			</Row>
 

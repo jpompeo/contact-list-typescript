@@ -15,7 +15,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({contacts, contactId}): JSX
 	//find contact whose id matches id in url
 	const contact = _.find(contacts, { id: contactId });
 
-	const renderContact = () => {
+	const renderContact = (): JSX.Element => {
 		//make sure contact was found
 		if (!contact) {
 			return (

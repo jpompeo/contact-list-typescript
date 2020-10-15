@@ -26,9 +26,9 @@ const EditForm: React.FC<EditFormProps> = (
 	const [image, setImage] = useState(contact.image);
 
 	//save edits as new contact and replace previous "version" of contact in contacts array on App state
-	const saveContact = () => {
+	const saveContact = (): void => {
 		//create new random id for edited contact
-		const generateId = () => Math.round(Math.random() * 100000000)
+		const generateId = (): number => Math.round(Math.random() * 100000000)
 
 		//new contact info to submit
 		const editedContact = {

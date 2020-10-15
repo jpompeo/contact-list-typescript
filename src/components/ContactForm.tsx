@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'
 import { Form, Col, Button } from 'react-bootstrap'
 import '../styles/ContactForm.css'
-import { AddContact } from "../types/generalTypes";
+import { AddContact, Contact } from "../types/generalTypes";
 
 interface ContactFormProps {
 	history: any;
@@ -23,13 +22,13 @@ const ContactForm: React.FC<ContactFormProps> = (
 	const [image, setImage] = useState('');
 
 	//create new contact and add to contacts array on App state
-	const createContact = () => {
+	const createContact = (): void => {
 
 		//create random id for new contact
-		const generateId = () => Math.round(Math.random() * 100000000)
+		const generateId = (): number => Math.round(Math.random() * 100000000)
 
 		//new contact to submit
-		const newContact = {
+		const newContact: Contact = {
 			id: generateId(),
 			name,
 			email,
@@ -150,11 +149,6 @@ const ContactForm: React.FC<ContactFormProps> = (
 
 		</div>
 	)
-}
-
-//set prop types
-ContactForm.propTypes = {
-	addNew: PropTypes.func.isRequired,
 }
 
 export default ContactForm;

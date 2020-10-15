@@ -32,13 +32,13 @@ const App: React.FC = (): JSX.Element => {
   //remove targeted contact from app state
   const removeContact = (contactId: ContactId): void =>  {
     //get current state of contacts from app
-    const currentContacts = [...contacts];
+    const currentContacts: Contact[] = [...contacts];
 
     //find index of contact to remove
-    const index = _.findIndex(currentContacts, (contact) => { return contact.id === contactId; });
+    const index: number = _.findIndex(currentContacts, (contact) => { return contact.id === contactId; });
 
     //make sure index was found
-    if (index !== -1) {
+    if (index > -1) {
       //remove contact from array
       currentContacts.splice(index, 1);
 
