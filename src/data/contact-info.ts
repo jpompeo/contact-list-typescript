@@ -1,10 +1,10 @@
-import BenderImage from "../images/bender.jpg";
-import ClaireImage from "../images/claire.jpg";
-import AndrewImage from "../images/andrew.jpg";
-import BrianImage from "../images/brian.jpg";
-import AllisonImage from "../images/allison.jpg";
-import VernonImage from "../images/vernon.jpg";
-import CarlImage from "../images/carl.jpg";
+import BenderImage from "../assets/images/bender.jpg";
+import ClaireImage from "../assets/images/claire.jpg";
+import AndrewImage from "../assets/images/andrew.jpg";
+import BrianImage from "../assets/images/brian.jpg";
+import AllisonImage from "../assets/images/allison.jpg";
+import VernonImage from "../assets/images/vernon.jpg";
+import CarlImage from "../assets/images/carl.jpg";
 
 
 // default contacts to display
