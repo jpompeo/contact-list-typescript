@@ -3,24 +3,23 @@ import { Link } from 'react-router-dom';
 import ContactList from './ContactList';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import '../styles/Home.css'
+import { Contact, DeleteContact, EditContact } from "../types/generalTypes";
 
 interface HomeProps {
-	contacts: [{
-		id: number;
-		name: string;
-		email: string;
-		phone: string;
-		image: string;
-	}];
-	deleteContact: (id: string) => void;
-	editInfo: (id: string) => void;
+	contacts: Contact[];
+	deleteContact: DeleteContact
+	editInfo: EditContact;
 }
 
-const Home: React.FC<HomeProps> = (props): JSX.Element => {
+const Home: React.FC<HomeProps> = (
+	{
+		contacts,
+		deleteContact,
+		editInfo
+	}): JSX.Element => {
 
 	return (
 		<Container fluid id="home-page">
-
 			{/* Header */}
 			<Row>
 				<Col md={{ span: 4, offset: 1 }}>
@@ -29,12 +28,10 @@ const Home: React.FC<HomeProps> = (props): JSX.Element => {
 
 				{/* Button to add new contacts */}
 				<Col id="add-contact-link" md={4}>
-
 					{/* direct to contact form on click */}
 					<Link to="/contacts/new">
 						<Button id="add-contact-button" type="button">Add Contact</Button>
 					</Link>
-
 				</Col>
 			</Row>
 
@@ -43,8 +40,8 @@ const Home: React.FC<HomeProps> = (props): JSX.Element => {
 			{/* Full list of contacts */}
 			<Row>
 				<Col>
-					<ContactList contacts={props.contacts} deleteContact={props.deleteContact}
-								 editInfo={props.editInfo}/>
+					<ContactList contacts={contacts} deleteContact={deleteContact}
+								 editInfo={editInfo}/>
 				</Col>
 			</Row>
 

@@ -7,3 +7,9 @@ export interface Contact {
 }
 
 export type ContactId = number;
+
+export type DeleteContact = (id: number) => void;
+
+export type EditContact = (id: number) => void;
+
+export type AddContact = (contact: Contact) => void;
