@@ -1,16 +1,29 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'
 import { Form, Col, Button } from 'react-bootstrap'
 import '../styles/EditForm.css'
+import { DeleteContact, AddContact, Contact } from "../types/generalTypes";
 
-const EditForm = (props) => {
+interface EditFormProps {
+	deleteContact: DeleteContact;
+	addNew: AddContact;
+	contact: Contact;
+	history: any;
+}
+
+const EditForm: React.FC<EditFormProps> = (
+	{
+		deleteContact,
+		addNew,
+		contact,
+		history
+	}): JSX.Element => {
 
 	//state to hold data from form input
-	const [name, setName] = useState(props.contact.name);
-	const [email, setEmail] = useState(props.contact.email);
-	const [phone, setPhone] = useState(props.contact.phone);
-	const [image, setImage] = useState(props.contact.image);
+	const [name, setName] = useState(contact.name);
+	const [email, setEmail] = useState(contact.email);
+	const [phone, setPhone] = useState(contact.phone);
+	const [image, setImage] = useState(contact.image);
 
 	//save edits as new contact and replace previous "version" of contact in contacts array on App state
 	const saveContact = () => {
@@ -30,13 +43,13 @@ const EditForm = (props) => {
 		if (name && email && phone && image && editedContact.id) {
 
 			//remove previous version of contact from app state
-			props.deleteContact(props.contact.id)
+			deleteContact(contact.id)
 
 			//add input value to contacts in App
-			props.addNew(editedContact);
+			addNew(editedContact);
 
 			//return to home screen
-			props.history.push('/')
+			history.push('/')
 
 		} else {
 			alert("Please fill out all required fields");
@@ -140,19 +153,6 @@ const EditForm = (props) => {
 			<Link className="back-link" to="/contacts">Back</Link>
 		</div>
 	)
-}
-
-//set prop types
-EditForm.propTypes = {
-	contacts: PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number.isRequired,
-		name: PropTypes.string.isRequired,
-		email: PropTypes.string.isRequired,
-		phone: PropTypes.string.isRequired,
-		image: PropTypes.string.isRequired
-	})),
-	addNew: PropTypes.func.isRequired,
-	deleteContact: PropTypes.func.isRequired
 }
 
 export default EditForm;
