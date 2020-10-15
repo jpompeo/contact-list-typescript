@@ -1,29 +1,35 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import PropTypes from 'prop-types'
 import '../styles/ContactDetail.css'
 import { Container, Row, Col } from 'react-bootstrap';
+import { Contact, ContactId } from "../types/generalTypes";
 
-const ContactDetail = (props) => {
+interface ContactDetailProps {
+	contacts: Contact[];
+	contactId: ContactId;
+}
+
+const ContactDetail: React.FC<ContactDetailProps> = ({contacts, contactId}): JSX.Element => {
 
 	//find contact whose id matches id in url
-	const contact = _.find(props.contacts, { id: props.contactId });
+	const contact = _.find(contacts, { id: contactId });
 
-	//make sure contact was found
-	if (!contact) {
-		console.log("Could not find contact")
-	} else {
-
-		return (
-			// Contact Details
-			<Container fluid className="contact-detail">
-				<Row className="detail-row">
-
+	const renderContact = () => {
+		//make sure contact was found
+		if (!contact) {
+			return (
+				<Col>
+					<p>"Could not find contact"</p>
+				</Col>
+			)
+		} else {
+			return (
+				<>
 					{/* Contact Image  */}
 					<Col className="detail-image-col" md={6}>
 						<div className="detail-image">
-							<img src={contact.image} alt={contact.name} />
+							<img src={contact.image} alt={contact.name}/>
 						</div>
 					</Col>
 
@@ -35,7 +41,16 @@ const ContactDetail = (props) => {
 
 						<p>{contact.phone}</p>
 					</Col>
+				</>
+			)
+		}
+	}
 
+		return (
+			// Contact Details
+			<Container fluid className="contact-detail">
+				<Row className="detail-row">
+					{renderContact()}
 				</Row>
 
 				{/* Back Link  */}
@@ -46,20 +61,6 @@ const ContactDetail = (props) => {
 				</Row>
 			</Container>
 		)
-	}
-}
-
-//set prop types
-ContactDetail.propTypes = {
-	contactId: PropTypes.number.isRequired,
-
-	contacts: PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number.isRequired,
-		name: PropTypes.string.isRequired,
-		email: PropTypes.string.isRequired,
-		phone: PropTypes.string.isRequired,
-		image: PropTypes.string.isRequired
-	}))
 }
 
 export default ContactDetail;
