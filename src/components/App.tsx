@@ -7,7 +7,7 @@ import EditForm from './EditForm';
 import _ from 'lodash';
 import { defaultContactInfo } from "../data/contact-info";
 import '../styles/App.css';
-import { Contact, ContactId } from '../types/generalTypes';
+import { Contact, ContactId, AddContact, DeleteContact, EditContact } from '../types/generalTypes';
 
 // const ComponentName: ComponentType<PropsInterface> = (props): ReturnType => {}
 const App: React.FC = (): JSX.Element => {
@@ -25,12 +25,12 @@ const App: React.FC = (): JSX.Element => {
   });
 
   // add new contact to app state with input from contact form
-  const addContact = (newContact: Contact): void =>  {
+  const addContact: AddContact = (newContact) =>  {
     setContacts(oldContacts => { return [...oldContacts, newContact] });
   }
 
   //remove targeted contact from app state
-  const removeContact = (contactId: ContactId): void =>  {
+  const removeContact: DeleteContact = (contactId)=>  {
     //get current state of contacts from app
     const currentContacts: Contact[] = [...contacts];
 
@@ -51,7 +51,7 @@ const App: React.FC = (): JSX.Element => {
   }
 
   // change state of contactToEdit on App (for edit form to use)
-  const editContact = (contactId: ContactId): void => {
+  const editContact: EditContact = (contactId) => {
     //find selected contact in array of contacts in app state
     const clickedContact = _.find(contacts, (contact) => { return contact.id === contactId; })
 
