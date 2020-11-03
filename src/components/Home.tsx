@@ -5,18 +5,7 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import '../styles/Home.css'
 import { Contact, DeleteContact, EditContact } from "../types/generalTypes";
 
-interface HomeProps {
-	contacts: Contact[];
-	deleteContact: DeleteContact
-	editInfo: EditContact;
-}
-
-const Home: React.FC<HomeProps> = (
-	{
-		contacts,
-		deleteContact,
-		editInfo
-	}): JSX.Element => {
+const Home: React.FC = (): JSX.Element => {
 
 	return (
 		<Container fluid id="home-page">
@@ -40,11 +29,7 @@ const Home: React.FC<HomeProps> = (
 			{/* Full list of contacts */}
 			<Row>
 				<Col>
-					<ContactList
-						contacts={contacts}
-						deleteContact={deleteContact}
-						editInfo={editInfo}
-					/>
+					<ContactList/>
 				</Col>
 			</Row>
 

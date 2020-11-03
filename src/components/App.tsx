@@ -12,6 +12,8 @@ import { Contact, ContactId, AddContact, DeleteContact, EditContact } from '../t
 // const ComponentName: ComponentType<PropsInterface> = (props): ReturnType => {}
 const App: React.FC = (): JSX.Element => {
 
+  //TODO: remove when context is fully setup
+/*
   //to hold all data for contact list and details
   const [contacts, setContacts] = useState<Contact[]>([...defaultContactInfo]); // default contacts to display
 
@@ -58,6 +60,7 @@ const App: React.FC = (): JSX.Element => {
     //set as contact to edit on app state
     clickedContact ? setContactToEdit(clickedContact) : alert("Could not find contact to edit");
   }
+*/
 
   return (
       <div id="app">
@@ -65,24 +68,16 @@ const App: React.FC = (): JSX.Element => {
         <Switch>
 
           {/* navigate to home from either path // pass contacts to render in list on home page and functions to edit/remove */}
-          <Route exact path={['/', '/contacts']} render={() => (
-              <Home contacts={contacts} deleteContact={removeContact} editInfo={editContact} />
-          )} />
+          <Route exact path={['/', '/contacts']} component={Home} />
 
           {/* pass function to add new contacts to app state through contact form */}
-          <Route path='/contacts/new' render={(routerProps) => (
-              <ContactForm addNew={addContact} history={routerProps.history} />
-          )} />
+          <Route path='/contacts/new' component={ContactForm} />
 
           {/* pass function to edit contacts in app state through edit form */}
-          <Route path='/contacts/edit' render={(routerProps) => (
-              <EditForm deleteContact={removeContact} addNew={addContact} contact={contactToEdit} history={routerProps.history} />
-          )} />
+          <Route path='/contacts/edit' component={EditForm} />
 
           {/* navigate to contact details by matching number in url path to contact id */}
-          <Route path='/contacts/:id' render={(routerProps) => (
-              <ContactDetail contactId={parseInt(routerProps.match.params.id, 10)} contacts={contacts} />
-          )} />
+          <Route path='/contacts/:id' component={ContactDetail} />
 
         </Switch>
       </div>
