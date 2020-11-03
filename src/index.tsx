@@ -5,10 +5,13 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import './styles/index.css'
 import * as serviceWorker from './serviceWorker';
+import ContactContextProvider from "./context/ContactContext";
 
 ReactDOM.render((
     <BrowserRouter>
-        <App />
+        <ContactContextProvider>
+            <App />
+        </ContactContextProvider>
     </BrowserRouter>
 ), document.getElementById('root'));
 
