@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap'
 import '../styles/ContactList.css'
-import { Contact, DeleteContact, EditContact, ContactId, ContactName } from "../types/generalTypes";
+import { ContactId, ContactName } from "../types/generalTypes";
 import { ContactContext } from "../context/ContactContext";
 
 // list of contacts shown on home page
 const ContactList: React.FC = (): JSX.Element => {
 
-	const { editContact, contacts, removeContact } = useContext(ContactContext)
+	const { editContact, contacts, removeContact, setCurrentContact } = useContext(ContactContext)
 
 	//ask for confirmation before removing contact when user clicks delete link
 	const confirmDelete = (contactId: ContactId, contactName: ContactName): void => {
@@ -26,7 +26,11 @@ const ContactList: React.FC = (): JSX.Element => {
 
 							{/* Contact Name */}
 							<Col className="contact-name" md={5}>
-								<Link to={`/contacts/${contact.id}`} className="contact-link">{contact.name} </Link>
+								<Link
+									to={`/contacts/${contact.id}`}
+									className="contact-link"
+									onClick={() => setCurrentContact(contact)}
+								>{contact.name} </Link>
 								<hr />
 							</Col>
 

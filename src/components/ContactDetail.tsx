@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import '../styles/ContactDetail.css'
 import { Container, Row, Col } from 'react-bootstrap';
 import { Contact, ContactId } from "../types/generalTypes";
+import { ContactContext } from "../context/ContactContext";
 
 interface ContactDetailProps {
 	contacts: Contact[];
@@ -11,12 +12,13 @@ interface ContactDetailProps {
 }
 
 const ContactDetail: React.FC<ContactDetailProps> = ({contacts, contactId}): JSX.Element => {
+	const { currentContact } = useContext(ContactContext);
 
-	//find contact whose id matches id in url
-	const contact = _.find(contacts, { id: contactId });
+	//get selected contact
+	const contact = currentContact;
 
 	const renderContact = (): JSX.Element => {
-		//make sure contact was found
+		//make sure current contact was set
 		if (!contact) {
 			return (
 				<Col>

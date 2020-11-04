@@ -9,6 +9,7 @@ type ContactContextType = {
 	removeContact: (contactId: ContactId) => void;
 	editContact: (contactId: ContactId) => void;
 	currentContact: Contact | null;
+	setCurrentContact: (contact: Contact) => void;
 };
 
 export const ContactContext = createContext<ContactContextType>({
@@ -16,7 +17,8 @@ export const ContactContext = createContext<ContactContextType>({
 	addContact: () => {},
 	removeContact: () => {},
 	editContact: () => {},
-	currentContact: null
+	currentContact: null,
+	setCurrentContact: () => {}
 });
 
 export default function ContactContextProvider({ children }: { children: ReactNode }) {
@@ -64,7 +66,8 @@ export default function ContactContextProvider({ children }: { children: ReactNo
 				addContact,
 				removeContact,
 				editContact,
-				currentContact
+				currentContact,
+				setCurrentContact
 			}}
 		>
 			{children}
